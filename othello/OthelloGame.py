@@ -90,8 +90,9 @@ class OthelloGame(Game):
         return b.countDiff(player)
 
 def display(board):
-    n = board.shape[0]
-
+    n = board.reshape(-1,)
+    return n
+"""
     for y in range(n):
         print (y,"|",end="")
     print("")
@@ -109,4 +110,4 @@ def display(board):
                     print("- ",end="")
         print("|")
 
-    print("   -----------------------")
+    print("   -----------------------")"""

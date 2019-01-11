@@ -1,0 +1,66 @@
+body{
+	
+}
+table{
+	width:752px;
+	height:752px;
+	margin:0 auto;
+	table-layout: fixed;
+	background-color:black;
+	position: relative;
+	z-index:2019;
+}
+td{
+	width:94px;
+	height:94px;
+	padding:0px;
+	background-color:green;
+}
+td > img{
+	display: block;
+	margin:auto;
+}
+
+#result{
+    position: absolute;
+    width: 550px;
+    height: 500px;
+    top: 150px;
+    left: 100px;
+    background-color: ghostwhite;
+    border: solid;
+    font-size: 60px;
+    text-align: center;
+	z-index: -2019;
+    display: none;
+}
+
+.player {
+    position: absolute;
+    border: solid;
+    width: 200px;
+    height: 250px;
+    font-size: 30px;
+    background-color: cadetblue;
+}
+
+div#white {
+    top: 100px;
+    right: 50px;
+}
+
+div#black {
+	top:100px;
+	left:50px;
+}
+
+.num{
+	font-size:50px;
+}
+
+div#whowin {
+    position: relative;
+    top: 300px;
+    font-size: 50px;
+    text-align: center;
+}

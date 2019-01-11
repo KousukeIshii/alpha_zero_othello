@@ -42,11 +42,14 @@ class Arena():
             if verbose:
                 assert(self.display)
                 print("Turn ", str(it), "Player ", str(curPlayer))
-                self.display(board)
+                print(np.array(self.display(board)).reshape(8,8))
+
             action = players[curPlayer+1](self.game.getCanonicalForm(board, curPlayer))
-
+            print('あくしょん')
+            print(action)
             valids = self.game.getValidMoves(self.game.getCanonicalForm(board, curPlayer),1)
-
+            print('ゔぁりっづ')
+            print(valids)
             if valids[action]==0:
                 print(action)
                 assert valids[action] >0
@@ -54,7 +57,7 @@ class Arena():
         if verbose:
             assert(self.display)
             print("Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(board, 1)))
-            self.display(board)
+            #self.display(board)
         return self.game.getGameEnded(board, 1)
 
     def playGames(self, num, verbose=False):
