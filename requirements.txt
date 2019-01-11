@@ -39,7 +39,7 @@ scipy==1.0.1
 simplegeneric==0.8.1
 six==1.11.0
 termcolor==1.1.0
-torch==1.0.0
+http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
 torchvision==0.2.1
 tornado==5.0.1
 traitlets==4.3.2
