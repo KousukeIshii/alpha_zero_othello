@@ -8,8 +8,12 @@ const sleep = (waitSeconds, someFunction) => {
 var board;
 var player;
 
-function updateboard(b,v){
+function updateboard(b,v,a){
 	$("td").each(function(i) {
+				if(a == i){
+					$(this).css('background-color','orangered');
+					$(this).attr('class', 'act');
+				}
 				if(v[i] == 1){
 					$(this).css('background-color','#F4FA58');
 					$(this).attr('class','valid');
@@ -27,6 +31,7 @@ function updateboard(b,v){
 
 function postjson(b,a,p,w){
 	var url = "";
+	var act = 65;
 	if (w == 0){
 		url = "/initboard";
 	} else if (w == 1) {
@@ -42,11 +47,16 @@ function postjson(b,a,p,w){
 	json = JSON.stringify(data);
 	$.post(url,json,null,"json")
 	.done(function(data1,textStatus,jqXHR) {
-		updateboard(data1.board,data1.valid);
+		if(data1.act){
+			act = data1.act;
+		}
+		if(w == 0){
+			fullupdateboard(data1.board,data1.valid,act)
+		} else {
+			updateboard(data1.board,data1.valid,act);
+		}
 		board = data1.board;
-		console.log(data1.gameover);
 		if(data1.gameover != 0){
-			console.log('hakka');
 			var nums = new Array(0,0);
 			$('#result').css('display','block');
 			$('table').css('z-index','-2000');
@@ -65,17 +75,18 @@ function postjson(b,a,p,w){
 				$('#whowin').append("プレイヤーの勝ち！");
 				return false;
 			}else{
-				console.log('hakka2');
 				$('#whowin').append("AIの勝ち！");
 				return false;
 			}
 		}
 		if(w == 1){
 			postjson(board,0,player,2);
+			return false;
 		}
 		if(w == 2){
 			if(data1.isSkip){
-				postjson(board,0,player,2)
+				postjson(board,0,player,2);
+				return false;
 			}
 		}
 	});
@@ -84,9 +95,13 @@ function postjson(b,a,p,w){
 
 $('td').on("click", function(){
 	var isvalid = $(this).attr('class')
-	if(!isvalid){
+	if(isvalid != "valid"){
 		return false;
 	}
+	$('.act').each(function() {
+		$(this).removeAttr('class');
+		$(this).css('background-color','green');
+	});
 	$('.valid').each(function() {
 		$(this).removeAttr('class');
 		$(this).css('background-color','green');
@@ -95,8 +110,32 @@ $('td').on("click", function(){
 	postjson(board,act,player,1);
 });
 
+function fullupdateboard(b,v,a){
+	$("td").each(function(i) {	
+				$(this).removeAttr('class');
+				$(this).css('background-color','green');
+				$(this).empty();
+				if(v[i] == 1){
+					$(this).css('background-color','#F4FA58');
+					$(this).attr('class','valid');
+					$(this).attr('id', 'c' + i);
+				}
+				if(b[i] == 0){
+
+				} else if(b[i] == 1) {
+					$(this).append("<img src='./static/images/revers.png' width='88' height='88'>");
+				} else {
+					$(this).append("<img src='./static/images/reversi.png' width='88' height='88'>");
+				}
+		});
+}
+
 $('#btn').on("click", function(){
-		const url = "/initboard";
 		player=1;
+		postjson(0,0,player,0);
+});
+
+$('#btn1').on("click", function(){
+		player=-1;
 		postjson(0,0,player,0);
 });

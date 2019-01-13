@@ -15,8 +15,8 @@ def load_args():
 	global p
 	g = OthelloGame(8)
 	n1 = NNet(g)
-	n1.load_checkpoint('./pretrained_models/othello/pytorch/','8x8_100checkpoints_best.pth.tar')
-	args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
+	n1.load_checkpoint('./','checkpoint_65.pth.tar')
+	args1 = dotdict({'numMCTSSims': 200, 'cpuct':1.0})
 	mcts1 = MCTS(g, n1, args1)
 	p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
 	print("loaded")
@@ -36,7 +36,8 @@ def predict():
 		"board": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,1,0,0,0,0,0,0,1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 		"valid": [0,0],
 		"gameover":0,
-		"isSkip":False
+		"isSkip":False,
+		"act":0
 	}
 	if flask.request.method == "POST":
 		board = flask.request.get_json(force=True).get("board")
@@ -52,6 +53,7 @@ def predict():
 		valids = g.getValidMoves(g.getCanonicalForm(board, curPlayer),1)
 		if(valids[-1] == 1):
 			response["isSkip"] = True
+		response["act"] = int(action)
 		response["board"] = n2l(board)
 		response["valid"] = n2l(valids)
 		return flask.jsonify(response)

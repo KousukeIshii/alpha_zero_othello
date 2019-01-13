@@ -26,7 +26,10 @@ td > img{
     width: 550px;
     height: 500px;
     top: 150px;
-    left: 100px;
+    right: 0;
+    top: 150px;
+    left: 0;
+    margin: 0 auto;
     background-color: ghostwhite;
     border: solid;
     font-size: 60px;
@@ -63,4 +66,15 @@ div#whowin {
     top: 300px;
     font-size: 50px;
     text-align: center;
+}
+
+#button-container{
+	width:500px;
+	margin:10px auto;
+}
+.btn{
+	width:200px;
+	height:50px;
+	margin:0 20px;
+	font-size:25px;
 }
