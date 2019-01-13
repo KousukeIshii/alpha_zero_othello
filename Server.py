@@ -9,14 +9,19 @@ import numpy as np
 from utils import *
 
 app = flask.Flask(__name__)
+g = OthelloGame(8)
+n1 = NNet(g)
+n1.load_checkpoint('./','checkpoint_65.pth.tar')
+args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
+mcts1 = MCTS(g, n1, args1)
+p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
+
 
 def load_args():
-	global g
-	global p
 	g = OthelloGame(8)
 	n1 = NNet(g)
 	n1.load_checkpoint('./','checkpoint_65.pth.tar')
-	args1 = dotdict({'numMCTSSims': 200, 'cpuct':1.0})
+	args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
 	mcts1 = MCTS(g, n1, args1)
 	p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
 	print("loaded")
@@ -101,5 +106,5 @@ def initboard():
 			return flask.jsonify(response)
 
 if __name__ == '__main__':
-	load_args()
+	#load_args()
 	app.run()
