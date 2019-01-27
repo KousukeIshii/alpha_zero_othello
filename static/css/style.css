@@ -34,7 +34,7 @@ td > img{
     border: solid;
     font-size: 60px;
     text-align: center;
-	z-index: -2019;
+	z-index: 1;
     display: none;
 }
 

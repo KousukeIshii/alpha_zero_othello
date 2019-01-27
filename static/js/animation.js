@@ -51,15 +51,15 @@ function postjson(b,a,p,w){
 			act = data1.act;
 		}
 		if(w == 0){
-			fullupdateboard(data1.board,data1.valid,act)
+			fullupdateboard(data1.board,data1.valid,act);
 		} else {
 			updateboard(data1.board,data1.valid,act);
 		}
+		pre_board = board;
 		board = data1.board;
 		if(data1.gameover != 0){
 			var nums = new Array(0,0);
 			$('#result').css('display','block');
-			$('table').css('z-index','-2000');
 			$('#result').css('z-index','3000');
 			for(var i=0;i<64;i++){
 				if(board[i] == 1){
@@ -69,13 +69,13 @@ function postjson(b,a,p,w){
 				}
 			}
 			$('.num').each(function(j){
-					$(this).append(nums[j]);
+					$(this).empty().append(nums[j]);
 				});
 			if(data1.gameover == player){
-				$('#whowin').append("プレイヤーの勝ち！");
+				$('#whowin').empty().append("プレイヤーの勝ち！");
 				return false;
 			}else{
-				$('#whowin').append("AIの勝ち！");
+				$('#whowin').empty().append("AIの勝ち！");
 				return false;
 			}
 		}
@@ -98,6 +98,7 @@ $('td').on("click", function(){
 	if(isvalid != "valid"){
 		return false;
 	}
+	pre_board = board
 	$('.act').each(function() {
 		$(this).removeAttr('class');
 		$(this).css('background-color','green');
@@ -114,6 +115,7 @@ function fullupdateboard(b,v,a){
 	$("td").each(function(i) {	
 				$(this).removeAttr('class');
 				$(this).css('background-color','green');
+				$('#result').css('z-index','-2020');
 				$(this).empty();
 				if(v[i] == 1){
 					$(this).css('background-color','#F4FA58');
