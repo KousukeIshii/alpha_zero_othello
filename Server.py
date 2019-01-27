@@ -11,20 +11,11 @@ from utils import *
 app = flask.Flask(__name__)
 g = OthelloGame(8)
 n1 = NNet(g)
-n1.load_checkpoint('./','checkpoint_65.pth.tar')
-args1 = dotdict({'numMCTSSims': 30, 'cpuct':1.0})
+n1.load_checkpoint('./','checkpoint_53.pth.tar')
+args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
 mcts1 = MCTS(g, n1, args1)
 p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
 
-
-def load_args():
-	g = OthelloGame(8)
-	n1 = NNet(g)
-	n1.load_checkpoint('./','checkpoint_65.pth.tar')
-	args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
-	mcts1 = MCTS(g, n1, args1)
-	p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
-	print("loaded")
 
 def l2n(board):
 	b = np.array(board)
@@ -33,13 +24,13 @@ def n2l(board):
     return board.reshape(-1,).tolist()
 @app.route('/')
 def hello_world():
-	return flask.render_template('kameme.html')
+	return flask.render_template('Alphazero.html')
 
 @app.route("/predict", methods=["POST"])
 def predict():
 	response = {
-		"board": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,1,0,0,0,0,0,0,1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		"valid": [0,0],
+		"board": 0,
+		"valid": 0,
 		"gameover":0,
 		"isSkip":False,
 		"act":0
@@ -67,7 +58,7 @@ def predict():
 def actres():
 	response = {
 		"board":[1],
-		"valid":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		"valid":0,
 		"gameover":0
 	}
 	if flask.request.method == "POST":
