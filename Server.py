@@ -11,7 +11,7 @@ from utils import *
 app = flask.Flask(__name__)
 g = OthelloGame(8)
 n1 = NNet(g)
-n1.load_checkpoint('./','checkpoint_53.pth.tar')
+n1.load_checkpoint('./','alphamodel.tar')
 args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
 mcts1 = MCTS(g, n1, args1)
 p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))
@@ -98,4 +98,4 @@ def initboard():
 
 if __name__ == '__main__':
 	#load_args()
-	app.run()
+	app.run(host="0.0.0.0", port=80, debug=True)
